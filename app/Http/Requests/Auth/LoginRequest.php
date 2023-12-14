@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class LoginRequest extends FormRequest
 {
@@ -27,7 +29,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'identity' => ['required', 'string'],
+            'login' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -41,21 +43,18 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $credentials = $this->validate([
-            'identity' => ['required', 'string'],
-            'password' => ['required', 'string'],
-        ]);
+        $user = User::where('email', $this->login)->orWhere('username', $this->login)->first();
 
-        $field = filter_var($credentials['identity'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if (! Auth::attempt([$field => $credentials['identity'], 'password' => $credentials['password']], $this->boolean('remember'))) {
+        if (!$user || !Hash::check($this->password, $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'identity' => trans('auth.failed'),
+                'login' => trans('auth.failed'),
             ]);
         }
 
+        Auth::login($user, $this->boolean('remember'));
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -88,7 +87,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-         $emailOrUsername = $this->has('email') ? $this->input('email') : $this->input('username');
-         return Str::transliterate(Str::lower($emailOrUsername) . '|' . $this->ip());
+        return Str::transliterate(Str::lower($this->input('login')).'|'.$this->ip());
     }
 }
