@@ -20,19 +20,37 @@
             </li>
             <li class="nav-item nav-category">Data Master</li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
+                <a class="nav-link" data-bs-toggle="collapse" href="#categories" role="button" aria-expanded="false"
                     aria-controls="emails">
-                    <i class="link-icon" data-feather="mail"></i>
+                    <i class="link-icon" data-feather="layout"></i>
                     <span class="link-title">Game Categories</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
-                <div class="collapse" id="emails">
+                <div class="collapse" id="categories">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
                             <a href="{{ route('add.category') }}" class="nav-link">Add Category</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('view.categories') }}" class="nav-link">View Categories</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#topics" role="button" aria-expanded="false"
+                    aria-controls="emails">
+                    <i class="link-icon" data-feather="layout"></i>
+                    <span class="link-title">Game Topics</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="topics">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('add.topic') }}" class="nav-link">Add Topic</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('view.topics') }}" class="nav-link">View Topics</a>
                         </li>
                     </ul>
                 </div>

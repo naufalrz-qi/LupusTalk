@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\GameCategoriesController;
+use App\Http\Controllers\Backend\TopicsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/update/category', 'updateCategory')->name('update.category');
         Route::get('/edit/category/{id}', 'editCategory')->name('edit.category');
         Route::get('/delete/category/{id}', 'deleteCategory')->name('delete.category');
+
+    });
+});
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Game Topics
+    Route::controller(TopicsController::class)->group(function () {
+        Route::get('/view/topics', 'viewTopics')->name('view.topics');
+        Route::get('/add/topic', 'addTopic')->name('add.topic');
+        Route::post('/store/topic', 'storeTopic')->name('store.topic');
+        Route::post('/update/topic', 'updateTopic')->name('update.topic');
+        Route::get('/edit/topic/{id}', 'editTopic')->name('edit.topic');
+        Route::get('/delete/topic/{id}', 'deleteTopic')->name('delete.topic');
 
     });
 });
