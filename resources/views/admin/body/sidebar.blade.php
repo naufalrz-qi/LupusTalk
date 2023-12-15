@@ -1,6 +1,6 @@
 <nav class="sidebar">
     <div class="sidebar-header">
-        <a href="#" class="sidebar-brand">
+        <a href="/admin/dashboard" class="sidebar-brand">
             Lupus<span>Talk</span>
         </a>
         <div class="sidebar-toggler not-active">
@@ -51,6 +51,24 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('view.topics') }}" class="nav-link">View Topics</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#posts" role="button" aria-expanded="false"
+                    aria-controls="emails">
+                    <i class="link-icon" data-feather="layout"></i>
+                    <span class="link-title">Posts</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="posts">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('add.post') }}" class="nav-link">Add Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('view.posts') }}" class="nav-link">View Posts</a>
                         </li>
                     </ul>
                 </div>

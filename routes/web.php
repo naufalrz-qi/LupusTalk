@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\GameCategoriesController;
 use App\Http\Controllers\Backend\TopicsController;
+use App\Http\Controllers\Backend\PostsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/update/topic', 'updateTopic')->name('update.topic');
         Route::get('/edit/topic/{id}', 'editTopic')->name('edit.topic');
         Route::get('/delete/topic/{id}', 'deleteTopic')->name('delete.topic');
+
+    });
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Game Posts
+    Route::controller(PostsController::class)->group(function () {
+        Route::get('/view/posts', 'viewPosts')->name('view.posts');
+        Route::get('/add/post', 'addPost')->name('add.post');
+        Route::post('/store/post', 'storePost')->name('store.post');
+        Route::post('/update/post', 'updatePost')->name('update.post');
+        Route::get('/edit/post/{id}', 'editPost')->name('edit.post');
+        Route::get('/delete/post/{id}', 'deletePost')->name('delete.post');
 
     });
 });
