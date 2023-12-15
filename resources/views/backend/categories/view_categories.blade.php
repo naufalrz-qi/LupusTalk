@@ -27,8 +27,6 @@
                                         <th>Category Icon</th>
                                         <th>Category Description</th>
                                         <th>Action</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,8 +36,9 @@
                                             <td>{{ $item->cat_name }}</td>
                                             <td>{{ $item->cat_icon }}</td>
                                             <td>{{ $item->cat_description }}</td>
-                                            <td><a class="btn btn-inverse-warning" href="">Edit</a></td>
-                                            <td><a class="btn btn-inverse-danger" href="">Delete</a></td>
+                                            <td><a class="btn btn-inverse-warning" href="{{ route('edit.category', $item->id) }}">Edit</a>
+                                                <a class="btn btn-inverse-danger" id="delete" href="{{ route('delete.category', $item->id) }}">Delete</a></td>
+
 
                                         </tr>
                                     @endforeach

@@ -9,13 +9,14 @@
             <div class="col-md-12 col-xl-12 middle-wrapper">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Add Category</h6>
+                        <h6 class="card-title">Edit Category</h6>
 
-                        <form class="forms-sample" method="POST" action="{{ route('store.category') }}">
+                        <form class="forms-sample" method="POST" action="{{ route('update.category') }}">
                             @csrf
+                            <input type="hidden" name="id" value="{{ $category->id }}">
                             <div class="mb-3">
                                 <label for="categoryName" class="form-label">Category Name</label>
-                                <input type="text"
+                                <input type="text" value="{{ $category->cat_name }}"
                                     class="form-control
                                     @error('cat_name')
                                     is-invalid
@@ -27,7 +28,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="categoryIcon" class="form-label">Category Icon</label>
-                                <input type="text"
+                                <input type="text" value="{{ $category->cat_icon }}"
                                     class="form-control
                                     @error('cat_icon')
                                     is-invalid
@@ -41,7 +42,7 @@
                                 <label for="categoryDescription" class="form-label">Description</label>
                                 <textarea type="text"
                                     class="form-control"
-                                    name="cat_description" ></textarea>
+                                    name="cat_description" >{{ $category->cat_description }}</textarea>
                             </div>
 
 

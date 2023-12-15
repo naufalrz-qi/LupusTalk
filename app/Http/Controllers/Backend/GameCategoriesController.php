@@ -19,4 +19,59 @@ class GameCategoriesController extends Controller
 
         return view('backend.categories.add_category');
     }
+    public function storeCategory(Request $request)
+    {
+        $request->validate([
+            'cat_name' => 'required|unique:categories|max:150',
+            'cat_icon' => 'required',
+        ]);
+
+        GameCategories::insert([
+            'cat_name' => $request->cat_name,
+            'cat_icon' => $request->cat_icon,
+            'cat_description' => $request->cat_description
+
+        ]);
+
+        $notification = array(
+            'message' => 'Category Create Successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('view.categories')->with($notification);
+    }
+
+    public function updateCategory(Request $request)
+    {
+        $pid = $request->id;
+        GameCategories::findOrFail($pid)->update([
+            'cat_name' => $request->cat_name,
+            'cat_icon' => $request->cat_icon,
+            'cat_description' => $request->cat_description
+
+        ]);
+
+        $notification = array(
+            'message' => 'Category Edit Successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('view.categories')->with($notification);
+    }
+
+    public function editCategory($id)
+    {
+        $category = GameCategories::findOrFail($id);
+        return view('backend.categories.edit_category', compact('category'));
+    }
+    public function deleteCategory($id)
+    {
+        GameCategories::findOrFail($id)->delete();
+        $notification = array(
+            'message' => 'Category Delete Successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
 }

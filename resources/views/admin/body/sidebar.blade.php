@@ -29,7 +29,7 @@
                 <div class="collapse" id="emails">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="" class="nav-link">Add Category</a>
+                            <a href="{{ route('add.category') }}" class="nav-link">Add Category</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('view.categories') }}" class="nav-link">View Categories</a>

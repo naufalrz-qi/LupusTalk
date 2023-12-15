@@ -48,6 +48,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(GameCategoriesController::class)->group(function () {
         Route::get('/view/categories', 'viewCategories')->name('view.categories');
         Route::get('/add/category', 'addCategory')->name('add.category');
+        Route::post('/store/category', 'storeCategory')->name('store.category');
+        Route::post('/update/category', 'updateCategory')->name('update.category');
+        Route::get('/edit/category/{id}', 'editCategory')->name('edit.category');
+        Route::get('/delete/category/{id}', 'deleteCategory')->name('delete.category');
 
     });
 });

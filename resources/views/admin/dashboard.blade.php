@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/fonts/feather-font/css/iconfont.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <!-- endinject -->
-
+    <script src="https://kit.fontawesome.com/aa9cc15fd2.js" crossorigin="anonymous"></script>
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/demo2/style.css') }}">
     <!-- End layout styles -->
@@ -106,13 +106,15 @@
             }
         @endif
     </script>
-      <!-- Plugin js for this page -->
-      <script src="{{ asset('backend/assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
-      <script src="{{ asset('backend//assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
-      <!-- End plugin js for this page -->
-      <!-- Custom js for this page -->
-      <script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
-      <!-- End custom js for this page -->
+    <!-- Plugin js for this page -->
+    <script src="{{ asset('backend/assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('backend//assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+    <script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
+    <!-- End custom js for this page -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{{ asset('backend/assets/js/code/code.js') }}"></script>
 </body>
 
 </html>
