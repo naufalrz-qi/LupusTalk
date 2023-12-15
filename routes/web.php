@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\GameCategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,19 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('/admin/logout', [AdminController::class, 'adminLogOut'])->name('admin.logout');
+    Route::get('/admin/profile', [AdminController::class, 'adminProfile'])->name('admin.profile');
+    Route::post('/admin/profile/store', [AdminController::class, 'adminProfileStore'])->name('admin.profile.store');
+    Route::get('/admin/change/password', [AdminController::class, 'adminChangepassword'])->name('admin.change_password');
+    Route::post('/admin/password/update', [AdminController::class, 'adminUpdatePassword'])->name('admin.password.update');
 });
 
 Route::get('/admin/login', [AdminController::class, 'adminLogin'])->name('admin.login');
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Game Categories
+    Route::controller(GameCategoriesController::class)->group(function () {
+        Route::get('/view/categories', 'viewCategories')->name('view.categories');
+        Route::get('/add/category', 'addCategory')->name('add.category');
+
+    });
+});
