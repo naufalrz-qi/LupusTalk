@@ -22,7 +22,7 @@
                             <table id="dataTableExample" class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>#</th>
                                         <th>Topics</th>
                                         <th>Category</th>
                                         <th>Title</th>

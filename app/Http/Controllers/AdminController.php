@@ -11,6 +11,9 @@ class AdminController extends Controller
 {
     public function adminDashboard()
     {
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        
         return view('admin.index');
     }
 

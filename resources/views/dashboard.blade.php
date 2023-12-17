@@ -1,5 +1,5 @@
-@extends('user.dashboard')
-@section('userhead')
+@extends(Auth::user()->role === 'admin'? 'admin.dashboard' : 'user.dashboard')
+@section('head')
     <style>
         .post-image {
             max-width: 100%;
