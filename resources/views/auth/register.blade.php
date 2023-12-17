@@ -10,14 +10,14 @@
     <meta name="keywords"
         content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-    <title>NobleUI - HTML Bootstrap 5 Admin Dashboard Template</title>
+    <title>Register</title>
     <style type="text/css">
         .authregister-side-wrapper {
             width: 100%;
             height: 100%;
             background-size: cover;
             background-position: center;
-            background-image: url(https://images.unsplash.com/photo-1539716947714-3295e1074d33?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGdhbWVyfGVufDB8fDB8fHww);
+            background-image: url(https://images.unsplash.com/photo-1544652478-6653e09f18a2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
 
         }
     </style>
@@ -71,21 +71,33 @@
                                                 <label for="exampleInputName1" class="form-label">Name</label>
                                                 <input type="text" class="form-control" id="exampleInputName1"
                                                     autocomplete="name" placeholder="Name" name="name">
+                                                    @error('name')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputUsername1" class="form-label">Username</label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1"
                                                     autocomplete="Username" placeholder="Username" name="username">
                                             </div>
+                                            @error('username')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                             <div class="mb-3">
                                                 <label for="userEmail" class="form-label">Email address</label>
                                                 <input type="email" class="form-control" id="userEmail"
                                                     placeholder="Email" name="email">
+                                                    @error('email')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <label for="userPassword" class="form-label">Password</label>
                                                 <input type="password" class="form-control" id="userPassword"
                                                     autocomplete="current-password" placeholder="Password" name="password">
+                                                    @error('password')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <label for="userPassword" class="form-label">Confirm Password</label>
