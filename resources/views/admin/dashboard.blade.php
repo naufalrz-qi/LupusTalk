@@ -122,8 +122,8 @@
     <script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
     <!-- End custom js for this page -->
 
-	<script src="{{ asset('backend/assets/vendors/core/core.js') }}"></script>
-	<!-- endinject -->
+	{{-- <script src="{{ asset('backend/assets/vendors/core/core.js') }}"></script>
+	<!-- endinject --> --}}
 
 	<!-- Plugin js for this page -->
 	<script src="{{ asset('backend/assets/vendors/jquery-validation/jquery.validate.min.js') }}"></script>

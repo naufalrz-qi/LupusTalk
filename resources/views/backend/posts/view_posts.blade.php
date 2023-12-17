@@ -23,7 +23,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Topic</th>
+                                        <th>Topics</th>
                                         <th>Category</th>
                                         <th>Title</th>
                                         <th>Post By</th>

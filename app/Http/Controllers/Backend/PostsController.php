@@ -14,7 +14,7 @@ class PostsController extends Controller
 {
     public function viewPosts()
     {
-        $posts = PostsModel::latest()->with('topics','category','user')->get();
+        $posts = PostsModel::with('topics','category','user')->get();
         return view('backend.posts.view_posts', compact('posts'));
     }
     public function addPost()
@@ -63,12 +63,37 @@ class PostsController extends Controller
 
     public function updatePost(Request $request)
     {
-        $pid = $request->id;
-        PostsModel::findOrFail($pid)->update([
-            'post_title' => $request->post_title,
-            'post_description' => $request->post_description
-
+        $request->validate([
+            'cat_id' => 'required',
+            'post_title' => 'required',
+            'post_content' => 'required',
+            'topics' => 'required|array|max:3',
         ]);
+
+        $pid = $request->id;
+        $post = PostsModel::findOrFail($pid);
+        $photo = '';
+        if ($request->file('post_photo')) {
+            if ($request->post_photo !== $post->post_photo) {
+                $file = $request->file('post_photo');
+                @unlink(public_path('upload/admin_images/posts/' . $request->post_photo));
+                $filename = date('YmdHi').$file->getClientOriginalName();
+                $file->move(public_path('upload/admin_images/posts/'),$filename);
+                $photo=$filename;
+             }
+        }else {
+            $photo = $post->post_photo;
+         }
+
+
+        $post->cat_id = $request->cat_id;
+        $post->post_title = $request->post_title;
+        $post->post_content = $request->post_content;
+        $post->post_photo = $photo;
+        $post->post_by = Auth::user()->id;
+        $post->save();
+
+        $post->topics()->sync($request->topics);
 
         $notification = array(
             'message' => 'Post Edit Successfully!',
@@ -81,11 +106,21 @@ class PostsController extends Controller
     public function editPost($id)
     {
         $post = PostsModel::findOrFail($id);
-        return view('backend.posts.edit_post', compact('post'));
+        $categories = GameCategories::all();
+        $topics = TopicsModel::all();
+        return view('backend.posts.edit_post', compact('post', 'categories', 'topics'));
     }
     public function deletePost($id)
     {
-        PostsModel::findOrFail($id)->delete();
+        $post = PostsModel::findOrFail($id);
+        $photo = $post->post_photo;
+        if ($photo !== null && $photo !== '') {
+            if (file_exists(public_path('upload/admin_images/posts/' . $photo))) {
+                unlink(public_path('upload/admin_images/posts/' . $photo));
+            }
+        }
+
+        $post->delete();
         $notification = array(
             'message' => 'Post Delete Successfully!',
             'alert-type' => 'success'
