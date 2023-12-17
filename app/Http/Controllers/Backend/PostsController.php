@@ -6,30 +6,52 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PostsModel;
+use App\Models\TopicsModel;
+use App\Models\GameCategories;
+
 
 class PostsController extends Controller
 {
     public function viewPosts()
     {
-        $posts = PostsModel::latest()->get();
+        $posts = PostsModel::latest()->with('topics','category','user')->get();
         return view('backend.posts.view_posts', compact('posts'));
     }
     public function addPost()
     {
+        $topics = TopicsModel::all();
+        $categories = GameCategories::all();
 
-        return view('backend.posts.add_post');
+        return view('backend.posts.add_post', compact('topics', 'categories'));
     }
     public function storePost(Request $request)
     {
         $request->validate([
-            'post_name' => 'required|unique:posts|max:100',
+            'cat_id' => 'required',
+            'post_title' => 'required',
+            'post_content' => 'required',
+            'topics' => 'required|array|max:3',
         ]);
 
-        PostsModel::insert([
-            'post_name' => $request->post_name,
-            'post_description' => $request->post_description
+        $photo = '';
+        if ($request->file('post_photo')) {
+            $file = $request->file('post_photo');
+            @unlink(public_path('upload/admin_images/posts/' . $request->post_photo));
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('upload/admin_images/posts/'),$filename);
+            $photo=$filename;
+         }
+
+        $post = PostsModel::create([
+            'cat_id' => $request->cat_id,
+            'post_title' => $request->post_title,
+            'post_content' => $request->post_content,
+            'post_photo' => $photo,
+            'post_by' => Auth::user()->id,
 
         ]);
+
+        $post->topics()->sync($request->topics);
 
         $notification = array(
             'message' => 'Post Create Successfully!',
@@ -43,7 +65,7 @@ class PostsController extends Controller
     {
         $pid = $request->id;
         PostsModel::findOrFail($pid)->update([
-            'post_name' => $request->post_name,
+            'post_title' => $request->post_title,
             'post_description' => $request->post_description
 
         ]);

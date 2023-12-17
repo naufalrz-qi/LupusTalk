@@ -9,31 +9,62 @@
             <div class="col-md-12 col-xl-12 middle-wrapper">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Add Topic</h6>
+                        <h6 class="card-title">Add Post</h6>
 
-                        <form class="forms-sample" method="POST" action="{{ route('store.topic') }}">
+                        <form class="forms-sample" method="POST" action="{{ route('store.post') }}"
+                            enctype="multipart/form-data">
                             @csrf
+
                             <div class="mb-3">
-                                <label for="topicName" class="form-label">Topic Name</label>
-                                <input type="text"
-                                    class="form-control
-                                    @error('topic_name')
-                                    is-invalid
-                                    @enderror"
-                                    name="topic_name" />
-                                @error('topic_name')
+                                <label class="form-label">Categories</label>
+                                <select class="js-example-basic-single form-select" name="cat_id" data-width="100%">
+                                    @foreach ($categories as $item)
+                                        <option value="{{ $item->id }}">{{ $item->cat_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('cat_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="mb-3">
-                                <label for="topicDescription" class="form-label">Description</label>
-                                <textarea type="text"
-                                    class="form-control"
-                                    name="topic_description" ></textarea>
+                                <label for="exampleInputName1" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="exampleInputName" autocomplete="off" name="post_title" />
+                                @error('post_title')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Content</label>
+                                <textarea type="text" class="form-control" id="exampleInputPassword1" autocomplete="off" name="post_content"></textarea>
+                                @error('post_content')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
+                            <div class="mb-3">
+                                <label class="form-label">Topics</label>
+                                <select class="js-example-basic-multiple form-select" name="topics[]" multiple="multiple" data-width="100%">
+                                    @foreach ($topics as $item)
+                                        <option value="{{ $item->id }}">{{ $item->topic_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('topics')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="photo" class="form-label">Photo</label>
+                                <input type="file" class="form-control" id="image" autocomplete="off" name="post_photo" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="photo" class="form-label"></label>
+                                <img id="showImage" class="wd-200 rounded mb-4"
+                                    src="{{ url('upload/no_image.jpg') }}"
+                                    alt="photopost">
+                            </div>
 
                             <button type="submit" class="btn btn-primary me-2">
                                 Save Changes
@@ -46,4 +77,17 @@
         </div>
 
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#image').change(function(e) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#showImage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files['0']);
+            });
+        });
+    </script>
 @endsection

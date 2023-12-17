@@ -28,6 +28,13 @@
     <!-- End plugin css for this page -->
 
     <!-- inject:css -->
+    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/vendors/jquery-tags-input/jquery.tagsinput.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/dropzone/dropzone.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/dropify/dist/dropify.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/pickr/themes/classic.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/font-awesome/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/flatpickr/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/fonts/feather-font/css/iconfont.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <!-- endinject -->
@@ -106,6 +113,7 @@
             }
         @endif
     </script>
+
     <!-- Plugin js for this page -->
     <script src="{{ asset('backend/assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('backend//assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
@@ -113,8 +121,36 @@
     <!-- Custom js for this page -->
     <script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
     <!-- End custom js for this page -->
+
+	<script src="{{ asset('backend/assets/vendors/core/core.js') }}"></script>
+	<!-- endinject -->
+
+	<!-- Plugin js for this page -->
+	<script src="{{ asset('backend/assets/vendors/jquery-validation/jquery.validate.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
+	<script src="{{ asset('backend/assets/vendors/inputmask/jquery.inputmask.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/select2/select2.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/typeahead.js/typeahead.bundle.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/jquery-tags-input/jquery.tagsinput.min.js')}}"></script>
+	<script src="{{ asset('backend/assets/vendors/dropzone/dropzone.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/dropify/dist/dropify.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/pickr/pickr.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/moment/moment.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/flatpickr/flatpickr.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{ asset('backend/assets/js/code/code.js') }}"></script>
+
+
+    <script src="{{ asset('backend/assets/js/form-validation.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/bootstrap-maxlength.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/inputmask.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/select2.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/typeahead.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/tags-input.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/dropzone.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/dropify.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/pickr.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/flatpickr.js') }}"></script>
 </body>
 
 </html>
