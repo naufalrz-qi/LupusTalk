@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <div>
                             <img class="wd-100 rounded-circle mb-4"
-                                src="{{ !empty($profileData->photo) ? url('upload/admin_images/' . $profileData->photo) : url('upload/no_image.jpg') }}"
+                                src="{{ !empty($profileData->photo) ? url('upload/user_images/' . $profileData->photo) : url('upload/no_image.jpg') }}"
                                 alt="profile">
                             <span class="h4 ms-3 text-light">{{ $profileData->username }}</span>
                         </div>
@@ -42,9 +42,9 @@
             <div class="col-md-7 col-xl-8 middle-wrapper">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Update Admin Profile</h6>
+                        <h6 class="card-title">Update User Profile</h6>
 
-                        <form class="forms-sample" method="POST" action="{{ route('admin.profile.store') }}"
+                        <form class="forms-sample" method="POST" action="{{ route('user.profile.store') }}"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
@@ -75,7 +75,7 @@
                             <div class="mb-3">
                                 <label for="photo" class="form-label"></label>
                                 <img id="showImage" class="wd-100 rounded-circle mb-4"
-                                    src="{{ !empty($profileData->photo) ? url('upload/admin_images/' . $profileData->photo) : url('upload/no_image.jpg') }}"
+                                    src="{{ !empty($profileData->photo) ? url('upload/user_images/' . $profileData->photo) : url('upload/no_image.jpg') }}"
                                     alt="profile">
                             </div>
 

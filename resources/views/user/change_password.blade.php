@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <div>
                             <img class="wd-100 rounded-circle mb-4"
-                                src="{{ !empty($profileData->photo) ? url('upload/admin_images/' . $profileData->photo) : url('upload/no_image.jpg') }}"
+                                src="{{ !empty($profileData->photo) ? url('upload/user_images/' . $profileData->photo) : url('upload/no_image.jpg') }}"
                                 alt="profile">
                             <span class="h4 ms-3 text-light">{{ $profileData->username }}</span>
                         </div>
@@ -42,9 +42,9 @@
             <div class="col-md-7 col-xl-8 middle-wrapper">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Admin Change Password</h6>
+                        <h6 class="card-title">User Change Password</h6>
 
-                        <form class="forms-sample" method="POST" action="{{ route('admin.password.update') }}">
+                        <form class="forms-sample" method="POST" action="{{ route('user.password.update') }}">
                             @csrf
                             <div class="mb-3">
                                 <label for="oldPassword" class="form-label">Old Password</label>

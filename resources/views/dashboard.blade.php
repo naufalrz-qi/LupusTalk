@@ -33,8 +33,16 @@
                                 <div class="card-header">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="d-flex align-items-center">
-                                            <img class="img-xs rounded-circle" src="https://via.placeholder.com/37x37"
-                                                alt="">
+                                            @if ($post->user->role === 'user')
+                                                <img class="img-xs rounded-circle"
+                                                    src="{{ !empty($post->user->photo) ? url('upload/user_images/' . $post->user->photo) : url('upload/no_image.jpg') }}"
+                                                    alt="">
+                                            @elseif($post->user->role === 'admin')
+                                                <img class="img-xs rounded-circle"
+                                                    src="{{ !empty($post->user->photo) ? url('upload/admin_images/' . $post->user->photo) : url('upload/no_image.jpg') }}"
+                                                    alt="">
+                                            @endif
+
                                             <div class="ms-2">
                                                 <p>{{ $post->user->name }}</p>
                                                 <p class="tx-11 text-muted">{{ $post->created_at->format('Y-m-d H:i:s') }}
@@ -48,9 +56,10 @@
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                                                 @if ($post->post_by === Auth::user()->id)
-                                                <a class="dropdown-item d-flex align-items-center" href="{{ route('edit.post', $post->id) }}"><i
-                                                    data-feather="inbox" class="icon-sm me-2"></i> <span
-                                                    class="">Edit Post</span></a>
+                                                    <a class="dropdown-item d-flex align-items-center"
+                                                        href="{{ route('edit.post', $post->id) }}"><i data-feather="inbox"
+                                                            class="icon-sm me-2"></i> <span class="">Edit
+                                                            Post</span></a>
                                                 @endif
 
                                                 <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
@@ -70,10 +79,10 @@
                                     <small><a href="#">{{ $post->category->cat_name }}</a></small>
                                     <h2>{{ $post->post_title }}</h2>
                                     <p class="mb-3 tx-14">{{ $post->post_content }}</p>
-                                    @if ( !empty($post->post_photo))
+                                    @if (!empty($post->post_photo))
                                         <img class="img-fluid post-image"
-                                        src="{{ url('upload/admin_images/posts/' . $post->post_photo) }}"
-                                        alt="">
+                                            src="{{ url('upload/admin_images/posts/' . $post->post_photo) }}"
+                                            alt="">
                                     @endif
                                     <div class="mt-3">
                                         @foreach ($post->topics as $topic)
