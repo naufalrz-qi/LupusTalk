@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -34,7 +35,7 @@ class AuthenticatedSessionController extends Controller
         if($request->user()->role === 'admin'){
             $url = '/admin/dashboard';
         }elseif($request->user()->role === 'user'){
-            $url = '/dashboard';
+            $url = '/home';
         }
 
         return redirect()->intended($url);

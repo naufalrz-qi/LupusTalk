@@ -58,11 +58,18 @@ class PostsController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('view.posts')->with($notification);
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('view.posts')->with($notification);
+        }else{
+            return redirect()->route('dashboard')->with($notification);
+        }
     }
 
     public function updatePost(Request $request)
     {
+        $pid = $request->id;
+        $post = PostsModel::findOrFail($pid);
+        if ($post->post_by === Auth::user()->id) {
         $request->validate([
             'cat_id' => 'required',
             'post_title' => 'required',
@@ -70,8 +77,7 @@ class PostsController extends Controller
             'topics' => 'required|array|max:3',
         ]);
 
-        $pid = $request->id;
-        $post = PostsModel::findOrFail($pid);
+
         $photo = '';
         if ($request->file('post_photo')) {
             if ($request->post_photo !== $post->post_photo) {
@@ -91,7 +97,10 @@ class PostsController extends Controller
         $post->post_content = $request->post_content;
         $post->post_photo = $photo;
         $post->post_by = Auth::user()->id;
+
+
         $post->save();
+
 
         $post->topics()->sync($request->topics);
 
@@ -100,15 +109,37 @@ class PostsController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('view.posts')->with($notification);
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('view.posts')->with($notification);
+        }else{
+            return redirect()->route('dashboard')->with($notification);
+        }
+    }else{
+        $notification = array(
+            'message' => 'You do not have permission!',
+            'alert-type' => 'Error'
+
+        );
+        return redirect()->route('dashboard')->with($notification);
+
+    }
     }
 
     public function editPost($id)
     {
+
         $post = PostsModel::findOrFail($id);
         $categories = GameCategories::all();
         $topics = TopicsModel::all();
-        return view('backend.posts.edit_post', compact('post', 'categories', 'topics'));
+        if ($post->post_by === Auth::user()->id) {
+            return view('backend.posts.edit_post', compact('post', 'categories', 'topics'));
+        }else{
+            $notification = array(
+                'message' => 'You do not have permission!',
+                'alert-type' => 'Error'
+            );
+            return redirect()->route('dashboard')->with($notification);
+        }
     }
     public function deletePost($id)
     {

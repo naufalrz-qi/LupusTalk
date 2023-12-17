@@ -6,19 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Responsive HTML Dashboard Template based on Bootstrap 5">
+    <meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
     <meta name="author" content="NobleUI">
     <meta name="keywords"
         content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-    <title>Login Page</title>
+    <title>Admin Login Page</title>
     <style type="text/css">
         .authlogin-side-wrapper {
             width: 100%;
             height: 100%;
             background-size: cover;
             background-position: center;
-            background-image: url(https://images.unsplash.com/photo-1603481546579-65d935ba9cdd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGdhbWVyfGVufDB8fDB8fHww);
+            background-image: url({{ asset('upload/5272450.jpg') }});
 
         }
     </style>
@@ -80,13 +80,18 @@
                                                     id="password" autocomplete="current-password"
                                                     placeholder="Password">
                                             </div>
-
+                                            <div class="form-check mb-3">
+                                                <input type="checkbox" class="form-check-input" id="authCheck">
+                                                <label class="form-check-label" for="authCheck">
+                                                    Remember me
+                                                </label>
+                                            </div>
                                             <div>
                                                 <button type="submit"
                                                     class="btn btn-primary me-2 mb-2 mb-md-0 text-white">Login</button>
 
                                             </div>
-                                            <a href="{{ route('register') }}" class="d-block mt-3 text-muted text-decoration-underline">Not a user? Sign
+                                            <a href="register.html" class="d-block mt-3 text-muted">Not a user? Sign
                                                 up</a>
                                         </form>
                                     </div>

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\GameCategoriesController;
 use App\Http\Controllers\Backend\TopicsController;
 use App\Http\Controllers\Backend\PostsController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/home', [HomeController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,6 +40,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/profile/store', [AdminController::class, 'adminProfileStore'])->name('admin.profile.store');
     Route::get('/admin/change/password', [AdminController::class, 'adminChangepassword'])->name('admin.change_password');
     Route::post('/admin/password/update', [AdminController::class, 'adminUpdatePassword'])->name('admin.password.update');
+});
+
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/user/profile', [UserController::class, 'userProfile'])->name('user.profile');
+    Route::post('/user/profile/store', [UserController::class, 'userProfileStore'])->name('user.profile.store');
+    Route::get('/user/change/password', [UserController::class, 'userChangepassword'])->name('user.change_password');
+    Route::post('/user/password/update', [UserController::class, 'userUpdatePassword'])->name('user.password.update');
 });
 
 Route::get('/admin/login', [AdminController::class, 'adminLogin'])->name('admin.login');
@@ -74,6 +80,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // Game Posts
     Route::controller(PostsController::class)->group(function () {
         Route::get('/view/posts', 'viewPosts')->name('view.posts');
+    });
+});
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Game Posts
+    Route::controller(PostsController::class)->group(function () {
         Route::get('/add/post', 'addPost')->name('add.post');
         Route::post('/store/post', 'storePost')->name('store.post');
         Route::post('/update/post', 'updatePost')->name('update.post');
@@ -82,3 +93,4 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     });
 });
+

@@ -11,8 +11,8 @@
     <meta name="keywords"
         content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-    <title>Admin Dashboard</title>
-
+    <title>Home</title>
+    @yield('userhead')
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,20 +53,20 @@
     <div class="main-wrapper">
 
         <!-- partial:partials/_sidebar.html -->
-        @include('admin.body.sidebar')
+        @include('user.body.sidebar')
 
         <!-- partial -->
 
         <div class="page-wrapper">
 
             <!-- partial:partials/_navbar.html -->
-            @include('admin.body.header')
+            @include('user.body.header')
             <!-- partial -->
 
             @yield('content')
 
             <!-- partial:partials/_footer.html -->
-            @include('admin.body.footer')
+            @include('user.body.footer')
             <!-- partial -->
 
         </div>

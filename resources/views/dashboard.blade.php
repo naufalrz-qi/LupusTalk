@@ -1,17 +1,119 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('user.dashboard')
+@section('userhead')
+    <style>
+        .post-image {
+            max-width: 100%;
+            max-height: 200px;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            /* Add pointer cursor to indicate clickability */
+        }
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+        /* Add a class for the full-size view */
+        .full-size-image {
+            max-width: 100%;
+            max-height: none;
+            width: 100%;
+            height: auto;
+        }
+    </style>
+@endsection
+@section('content')
+    <div class="page-content">
+
+        <div class="row profile-body">
+            <!-- middle wrapper start -->
+            <div class="col-md-12 col-xl-12 middle-wrapper">
+                <div class="row">
+                    @foreach ($posts as $post)
+                        <div class="col-md-12 grid-margin">
+                            <div class="card rounded">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img class="img-xs rounded-circle" src="https://via.placeholder.com/37x37"
+                                                alt="">
+                                            <div class="ms-2">
+                                                <p>{{ $post->user->name }}</p>
+                                                <p class="tx-11 text-muted">{{ $post->created_at->format('Y-m-d H:i:s') }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown">
+                                            <a type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                <i class="icon-lg pb-3px" data-feather="more-horizontal"></i>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                                @if ($post->post_by === Auth::user()->id)
+                                                <a class="dropdown-item d-flex align-items-center" href="{{ route('edit.post', $post->id) }}"><i
+                                                    data-feather="inbox" class="icon-sm me-2"></i> <span
+                                                    class="">Edit Post</span></a>
+                                                @endif
+
+                                                <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                                        data-feather="corner-right-up" class="icon-sm me-2"></i> <span
+                                                        class="">Go to post</span></a>
+                                                <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                                        data-feather="share-2" class="icon-sm me-2"></i> <span
+                                                        class="">Share</span></a>
+                                                <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                                        data-feather="copy" class="icon-sm me-2"></i> <span
+                                                        class="">Copy link</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <small><a href="#">{{ $post->category->cat_name }}</a></small>
+                                    <h2>{{ $post->post_title }}</h2>
+                                    <p class="mb-3 tx-14">{{ $post->post_content }}</p>
+                                    @if ( !empty($post->post_photo))
+                                        <img class="img-fluid post-image"
+                                        src="{{ url('upload/admin_images/posts/' . $post->post_photo) }}"
+                                        alt="">
+                                    @endif
+                                    <div class="mt-3">
+                                        @foreach ($post->topics as $topic)
+                                            <a class="btn btn-inverse-info"> {{ $topic->topic_name }}</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+                                    <div class="d-flex post-actions">
+                                        <a href="javascript:;" class="d-flex align-items-center text-muted me-4">
+                                            <i class="icon-md" data-feather="heart"></i>
+                                            <p class="d-none d-md-block ms-2">Like</p>
+                                        </a>
+                                        <a href="javascript:;" class="d-flex align-items-center text-muted me-4">
+                                            <i class="icon-md" data-feather="message-square"></i>
+                                            <p class="d-none d-md-block ms-2">Comment</p>
+                                        </a>
+                                        <a href="javascript:;" class="d-flex align-items-center text-muted">
+                                            <i class="icon-md" data-feather="share"></i>
+                                            <p class="d-none d-md-block ms-2">Share</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
+            <!-- middle wrapper end -->
+
         </div>
+
     </div>
-</x-app-layout>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.post-image').on('click', function() {
+                $(this).toggleClass('full-size-image');
+            });
+        });
+    </script>
+@endsection

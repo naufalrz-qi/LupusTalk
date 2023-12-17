@@ -1,5 +1,5 @@
-@extends('admin.dashboard')
-@section('admin')
+@extends(Auth::user()->role === 'admin'? 'admin.dashboard' : 'user.dashboard')
+@section('content')
     <div class="page-content">
 
 
