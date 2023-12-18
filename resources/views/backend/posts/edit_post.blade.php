@@ -56,7 +56,7 @@
                             <div class="mb-3">
                                 <label for="photo" class="form-label"></label>
                                 <img id="showImage" class="wd-200 rounded mb-4"
-                                    src="{{ !empty($post->post_photo) ? url('upload/admin_images/posts/' . $post->post_photo) : url('upload/no_image.jpg') }}"
+                                    src="{{ !empty($post->post_photo) ? url('upload/posts/' . $post->post_photo) : url('upload/no_image.jpg') }}"
                                     alt="photopost">
                             </div>
 

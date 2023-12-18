@@ -41,7 +41,7 @@
     <!-- endinject -->
     <script src="https://kit.fontawesome.com/aa9cc15fd2.js" crossorigin="anonymous"></script>
     <!-- Layout styles -->
-    <link rel="stylesheet" href="{{ asset('backend/assets/css/demo2/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/demo/style.css') }}">
     <!-- End layout styles -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="{{ asset('backend/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css') }}">

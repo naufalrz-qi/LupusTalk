@@ -3,9 +3,9 @@
     <style>
         .post-image {
             max-width: 100%;
-            max-height: 200px;
+            max-height: 300px;
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
             cursor: pointer;
             /* Add pointer cursor to indicate clickability */
@@ -57,12 +57,16 @@
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                                                 @if ($post->post_by === Auth::user()->id)
                                                     <a class="dropdown-item d-flex align-items-center"
-                                                        href="{{ route('edit.post', $post->id) }}"><i data-feather="inbox"
+                                                        href="{{ route('edit.post', $post->id) }}"><i data-feather="edit-2"
                                                             class="icon-sm me-2"></i> <span class="">Edit
                                                             Post</span></a>
+                                                            <a id="delete" class="dropdown-item d-flex align-items-center"
+                                                            href="{{ route('delete.post', $post->id) }}"><i data-feather="trash-2"
+                                                                class="icon-sm me-2"></i> <span class="">Delete
+                                                                Post</span></a>
                                                 @endif
 
-                                                <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                                <a class="dropdown-item d-flex align-items-center" href="{{ route('detail.post', $post->id) }}"><i
                                                         data-feather="corner-right-up" class="icon-sm me-2"></i> <span
                                                         class="">Go to post</span></a>
                                                 <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
@@ -81,12 +85,12 @@
                                     <p class="mb-3 tx-14">{{ $post->post_content }}</p>
                                     @if (!empty($post->post_photo))
                                         <img class="img-fluid post-image"
-                                            src="{{ url('upload/admin_images/posts/' . $post->post_photo) }}"
+                                            src="{{ url('upload/posts/' . $post->post_photo) }}"
                                             alt="">
                                     @endif
                                     <div class="mt-3">
                                         @foreach ($post->topics as $topic)
-                                            <a class="btn btn-inverse-info"> {{ $topic->topic_name }}</a>
+                                            <a class="btn btn-inverse-primary"> {{ $topic->topic_name }}</a>
                                         @endforeach
                                     </div>
                                 </div>

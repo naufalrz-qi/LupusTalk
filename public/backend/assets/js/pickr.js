@@ -9,7 +9,7 @@ $(function() {
   const pickr1 = Pickr.create({
     el: '#pickr_1',
     theme: 'classic', // or 'monolith', or 'nano',
-    default: '#6571ff',
+    default: '#F99417',
 
     swatches: [
       'rgba(244, 67, 54, 1)',

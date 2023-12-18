@@ -17,6 +17,13 @@ class PostsController extends Controller
         $posts = PostsModel::with('topics','category','user')->get();
         return view('backend.posts.view_posts', compact('posts'));
     }
+    public function detailPost($id)
+    {
+
+        $post = PostsModel::with('topics','category','user')->find($id);
+
+        return view('backend.posts.detail_post', compact('post'));
+    }
     public function addPost()
     {
         $topics = TopicsModel::all();
@@ -82,9 +89,9 @@ class PostsController extends Controller
         if ($request->file('post_photo')) {
             if ($request->post_photo !== $post->post_photo) {
                 $file = $request->file('post_photo');
-                @unlink(public_path('upload/admin_images/posts/' . $request->post_photo));
+                @unlink(public_path('upload/posts/' . $request->post_photo));
                 $filename = date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('upload/admin_images/posts/'),$filename);
+                $file->move(public_path('upload/posts/'),$filename);
                 $photo=$filename;
              }
         }else {
@@ -146,8 +153,8 @@ class PostsController extends Controller
         $post = PostsModel::findOrFail($id);
         $photo = $post->post_photo;
         if ($photo !== null && $photo !== '') {
-            if (file_exists(public_path('upload/admin_images/posts/' . $photo))) {
-                unlink(public_path('upload/admin_images/posts/' . $photo));
+            if (file_exists(public_path('upload/posts/' . $photo))) {
+                unlink(public_path('upload/posts/' . $photo));
             }
         }
 

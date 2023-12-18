@@ -38,7 +38,7 @@
                                             <td>
 
                                                 @foreach ($item->topics as $topic)
-                                                    <a class="btn btn-inverse-info"> {{ $topic->topic_name }}</a>
+                                                    <a class="btn btn-inverse-primary"> {{ $topic->topic_name }}</a>
                                                 @endforeach
                                             </td>
                                             <td>{{ $item->category->cat_name }}</td>

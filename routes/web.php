@@ -91,6 +91,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/update/post', 'updatePost')->name('update.post');
         Route::get('/edit/post/{id}', 'editPost')->name('edit.post');
         Route::get('/delete/post/{id}', 'deletePost')->name('delete.post');
+        Route::get('/detail/post/{id}', 'detailPost')->name('detail.post');
 
     });
 });
