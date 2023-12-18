@@ -4,24 +4,18 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\PostsModel;
-use App\Models\TopicsModel;
-use App\Models\GameCategories;
 
-
-
-class PostsController extends Controller
+class RepliesController extends Controller
 {
     public function viewPosts()
     {
-        $posts = PostsModel::with('categories','topic','user')->get();
+        $posts = PostsModel::with('topics','category','user')->get();
         return view('backend.posts.view_posts', compact('posts'));
     }
     public function detailPost($id)
     {
 
-        $post = PostsModel::with('categories','topic','user')->find($id);
+        $post = PostsModel::with('topics','category','user')->find($id);
 
         return view('backend.posts.detail_post', compact('post'));
     }
@@ -35,23 +29,23 @@ class PostsController extends Controller
     public function storePost(Request $request)
     {
         $request->validate([
-            'topic_id' => 'required',
+            'cat_id' => 'required',
             'post_title' => 'required',
             'post_content' => 'required',
-            'categories' => 'required|array|max:3',
+            'topics' => 'required|array|max:3',
         ]);
 
         $photo = '';
         if ($request->file('post_photo')) {
             $file = $request->file('post_photo');
-            @unlink(public_path('upload/posts/' . $request->post_photo));
+            @unlink(public_path('upload/admin_images/posts/' . $request->post_photo));
             $filename = date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('upload/posts/'),$filename);
+            $file->move(public_path('upload/admin_images/posts/'),$filename);
             $photo=$filename;
          }
 
         $post = PostsModel::create([
-            'topic_id' => $request->topic_id,
+            'cat_id' => $request->cat_id,
             'post_title' => $request->post_title,
             'post_content' => $request->post_content,
             'post_photo' => $photo,
@@ -59,7 +53,7 @@ class PostsController extends Controller
 
         ]);
 
-        $post->categories()->sync($request->categories);
+        $post->topics()->sync($request->topics);
 
         $notification = array(
             'message' => 'Post Create Successfully!',
@@ -79,10 +73,10 @@ class PostsController extends Controller
         $post = PostsModel::findOrFail($pid);
         if ($post->post_by === Auth::user()->id) {
         $request->validate([
-            'topic_id' => 'required',
+            'cat_id' => 'required',
             'post_title' => 'required',
             'post_content' => 'required',
-            'categories' => 'required|array|max:3',
+            'topics' => 'required|array|max:3',
         ]);
 
 
@@ -100,7 +94,7 @@ class PostsController extends Controller
          }
 
 
-        $post->topic_id = $request->topic_id;
+        $post->cat_id = $request->cat_id;
         $post->post_title = $request->post_title;
         $post->post_content = $request->post_content;
         $post->post_photo = $photo;
@@ -110,7 +104,7 @@ class PostsController extends Controller
         $post->save();
 
 
-        $post->categories()->sync($request->categories);
+        $post->topics()->sync($request->topics);
 
         $notification = array(
             'message' => 'Post Edit Successfully!',

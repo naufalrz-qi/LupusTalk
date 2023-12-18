@@ -65,7 +65,7 @@
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Bio</label>
                                 <textarea type="text" class="form-control" id="exampleInputPassword1" autocomplete="off" name="bio"
-                                    value="{{ $profileData->bio }}" placeholder="Bio"></textarea>
+                                placeholder="Bio">{{ $profileData->bio }}</textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="photo" class="form-label">Photo</label>

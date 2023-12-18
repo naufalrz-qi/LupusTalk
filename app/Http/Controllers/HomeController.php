@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $posts = PostsModel::latest()->with('topics','category','user')->get();
+        $posts = PostsModel::latest()->with('categories','topic','user')->get();
         return view('dashboard', compact('posts'));
     }
 }

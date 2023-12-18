@@ -23,8 +23,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Topics</th>
-                                        <th>Category</th>
+                                        <th>Categories</th>
+                                        <th>Topic</th>
                                         <th>Title</th>
                                         <th>Post By</th>
                                         <th>Date</th>
@@ -37,17 +37,17 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>
 
-                                                @foreach ($item->topics as $topic)
-                                                    <a class="btn btn-inverse-primary"> {{ $topic->topic_name }}</a>
+                                                @foreach ($item->categories as $category)
+                                                    <a class="btn btn-inverse-primary"> {{ $category->cat_name }}</a>
                                                 @endforeach
                                             </td>
-                                            <td>{{ $item->category->cat_name }}</td>
+                                            <td>{{ $item->topic->topic_name }}</td>
                                             <td>{{ $item->post_title }}</td>
                                             <td>{{ $item->user->name }}</td>
                                             <td>{{ $item->created_at }}</td>
 
                                             <td>
-                                                <a class="btn btn-inverse-info" href="">Preview</a>
+                                                <a class="btn btn-inverse-info" href="{{ route('detail.post', $item->id) }}">Preview</a>
                                                 <a class="btn btn-inverse-warning"
                                                     href="{{ route('edit.post', $item->id) }}">Edit</a>
                                                 <a class="btn btn-inverse-danger" id="delete"

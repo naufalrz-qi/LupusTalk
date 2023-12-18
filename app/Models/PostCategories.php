@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PostTopics extends Model
+class PostCategories extends Model
 {
     use HasFactory;
-    protected $table = 'post_topics';
+    protected $table = 'post_categories';
     protected $guarded = [];
 }

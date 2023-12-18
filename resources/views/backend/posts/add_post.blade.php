@@ -16,13 +16,13 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label class="form-label">Categories</label>
-                                <select class="js-example-basic-single form-select" name="cat_id" data-width="100%">
-                                    @foreach ($categories as $item)
-                                        <option value="{{ $item->id }}">{{ $item->cat_name }}</option>
+                                <label class="form-label">Topics</label>
+                                <select class="js-example-basic-single form-select" name="topic_id" data-width="100%">
+                                    @foreach ($topics as $item)
+                                        <option value="{{ $item->id }}">{{ $item->topic_name }}</option>
                                     @endforeach
                                 </select>
-                                @error('cat_id')
+                                @error('topic_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -44,13 +44,13 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Topics</label>
-                                <select class="js-example-basic-multiple form-select" name="topics[]" multiple="multiple" data-width="100%">
-                                    @foreach ($topics as $item)
-                                        <option value="{{ $item->id }}">{{ $item->topic_name }}</option>
+                                <label class="form-label">Categories</label>
+                                <select class="js-example-basic-multiple form-select" name="categories[]" multiple="multiple" data-width="100%">
+                                    @foreach ($categories as $item)
+                                        <option value="{{ $item->id }}">{{ $item->cat_name }}</option>
                                     @endforeach
                                 </select>
-                                @error('topics')
+                                @error('categories')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

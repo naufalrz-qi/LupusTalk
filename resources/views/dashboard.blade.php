@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <small><a href="#">{{ $post->category->cat_name }}</a></small>
+                                    <small><a href="#">{{ $post->topic->topic_name }}</a></small>
                                     <h2>{{ $post->post_title }}</h2>
                                     <p class="mb-3 tx-14">{{ $post->post_content }}</p>
                                     @if (!empty($post->post_photo))
@@ -89,8 +89,8 @@
                                             alt="">
                                     @endif
                                     <div class="mt-3">
-                                        @foreach ($post->topics as $topic)
-                                            <a class="btn btn-inverse-primary"> {{ $topic->topic_name }}</a>
+                                        @foreach ($post->categories as $category)
+                                            <a class="btn btn-inverse-primary"> {{ $category->cat_name }}</a>
                                         @endforeach
                                     </div>
                                 </div>

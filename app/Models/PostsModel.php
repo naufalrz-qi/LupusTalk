@@ -10,14 +10,14 @@ class PostsModel extends Model
     use HasFactory;
     protected $table = 'posts';
 
-    public function topics()
+    public function categories()
     {
-        return $this->belongsToMany(TopicsModel::class, 'post_topics', 'post_id', 'topic_id');
+        return $this->belongsToMany(GameCategories::class, 'post_categories', 'post_id', 'cat_id');
     }
 
-    public function category()
+    public function topic()
     {
-        return $this->belongsTo(GameCategories::class, 'cat_id');
+        return $this->belongsTo(TopicsModel::class, 'topic_id');
     }
 
     public function user()

@@ -9,18 +9,18 @@
             <div class="col-md-12 col-xl-12 middle-wrapper">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Add Post</h6>
+                        <h6 class="card-title">Edit Post</h6>
 
                         <form class="forms-sample" method="POST" action="{{ route('update.post') }}"
                             enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{ $post->id }}">
                             <div class="mb-3">
-                                <label class="form-label">Categories</label>
-                                <select name="cat_id" class="js-example-basic-single form-select" data-width="100%">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ $post->cat_id == $category->id ? 'selected' : '' }}>{{ $category->cat_name }}
+                                <label class="form-label">Topics</label>
+                                <select name="topic_id" class="js-example-basic-single form-select" data-width="100%">
+                                    @foreach ($topics as $topic)
+                                        <option value="{{ $topic->id }}"
+                                            {{ $post->topic_id == $topic->id ? 'selected' : '' }}>{{ $topic->topic_name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -38,13 +38,13 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Topics</label>
-                                <select name="topics[]" class="js-example-basic-multiple form-select" multiple="multiple"
+                                <label class="form-label">Categories</label>
+                                <select name="categories[]" class="js-example-basic-multiple form-select" multiple="multiple"
                                     data-width="100%">
-                                    @foreach ($topics as $topic)
-                                        <option value="{{ $topic->id }}"
-                                            {{ in_array($topic->id, $post->topics->pluck('id')->toArray()) ? 'selected' : '' }}>
-                                            {{ $topic->topic_name }}</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ in_array($category->id, $post->categories->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                            {{ $category->cat_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
