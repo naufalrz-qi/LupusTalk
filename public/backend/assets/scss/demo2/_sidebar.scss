@@ -25,7 +25,7 @@
     .sidebar-open & {
       border-bottom: 1px solid $border-color;
     }
-  
+
     .sidebar-brand {
       opacity: 1;
       visibility: visible;
@@ -53,41 +53,41 @@
         transition: all .3s;
         position: relative;
       }
-      
+
       span + span {
         margin-top: 4px;
       }
-      
+
       &.active span:nth-child(1) {
         -webkit-animation: ease .6s top forwards;
                 animation: ease .6s top forwards;
       }
-      
+
       &.not-active span:nth-child(1) {
         -webkit-animation: ease .6s top-2 forwards;
                 animation: ease .6s top-2 forwards;
       }
-      
+
       &.active span:nth-child(2) {
         -webkit-animation: ease .6s scaled forwards;
                 animation: ease .6s scaled forwards;
       }
-      
+
       &.not-active span:nth-child(2) {
         -webkit-animation: ease .6s scaled-2 forwards;
                 animation: ease .6s scaled-2 forwards;
       }
-      
+
       &.active span:nth-child(3) {
         -webkit-animation: ease .6s bottom forwards;
                 animation: ease .6s bottom forwards;
       }
-      
+
       &.not-active span:nth-child(3) {
         -webkit-animation: ease .6s bottom-2 forwards;
                 animation: ease .6s bottom-2 forwards;
       }
-      
+
       @-webkit-keyframes top {
         0% {
           top: 0;
@@ -105,7 +105,7 @@
                   transform: rotate(45deg);
         }
       }
-      
+
       @keyframes top {
         0% {
           top: 0;
@@ -123,7 +123,7 @@
                   transform: rotate(45deg);
         }
       }
-      
+
       @-webkit-keyframes top-2 {
         0% {
           top: 6px;
@@ -141,7 +141,7 @@
                   transform: rotate(0deg);
         }
       }
-      
+
       @keyframes top-2 {
         0% {
           top: 6px;
@@ -159,7 +159,7 @@
                   transform: rotate(0deg);
         }
       }
-      
+
       @-webkit-keyframes bottom {
         0% {
           bottom: 0;
@@ -177,7 +177,7 @@
                   transform: rotate(135deg);
         }
       }
-      
+
       @keyframes bottom {
         0% {
           bottom: 0;
@@ -195,7 +195,7 @@
                   transform: rotate(135deg);
         }
       }
-      
+
       @-webkit-keyframes bottom-2 {
         0% {
           bottom: 6px;
@@ -213,7 +213,7 @@
                   transform: rotate(0);
         }
       }
-      
+
       @keyframes bottom-2 {
         0% {
           bottom: 6px;
@@ -231,7 +231,7 @@
                   transform: rotate(0);
         }
       }
-      
+
       @-webkit-keyframes scaled {
         50% {
           -webkit-transform: scale(0);
@@ -242,7 +242,7 @@
                   transform: scale(0);
         }
       }
-      
+
       @keyframes scaled {
         50% {
           -webkit-transform: scale(0);
@@ -253,7 +253,7 @@
                   transform: scale(0);
         }
       }
-      
+
       @-webkit-keyframes scaled-2 {
         0% {
           -webkit-transform: scale(0);
@@ -268,7 +268,7 @@
                   transform: scale(1);
         }
       }
-      
+
       @keyframes scaled-2 {
         0% {
           -webkit-transform: scale(0);
@@ -291,8 +291,8 @@
     border-right: 1px solid $border-color;
     height: 100%;
     -webkit-box-shadow: 0 8px 10px 0 #03060b;
-            box-shadow: 0 8px 10px 0 #03060b; 
-    background: $card-bg;     
+            box-shadow: 0 8px 10px 0 #03060b;
+    background: $card-bg;
     .nav {
       display: flex;
       flex-direction: column;
@@ -413,7 +413,7 @@
               color: $primary;
               &::before {
               border: 1px solid $primary;
-              background: $primary;       
+              background: $primary;
               }
             }
           }
@@ -423,7 +423,7 @@
               margin-left: 3px;
               &::before {
                 border: 1px solid $primary;
-                background: $primary;       
+                background: $primary;
               }
             }
           }

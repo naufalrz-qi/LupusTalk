@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('post_id');
             $table->text('answer_content')->nullable();
             $table->unsignedBigInteger('answer_by');
+            $table->string('answer_photo');
             $table->timestamps();
 
 

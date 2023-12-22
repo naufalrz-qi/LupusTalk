@@ -73,12 +73,18 @@
                                                 <label for="login" class="form-label">Email or Username</label>
                                                 <input type="text" class="form-control" name="login" id="login"
                                                     placeholder="Email or Username">
+                                                    @error('login')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <label for="userPassword" class="form-label">Password</label>
                                                 <input type="password" name="password" class="form-control"
                                                     id="password" autocomplete="current-password"
                                                     placeholder="Password">
+                                                    @error('password')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
 
                                             <div>

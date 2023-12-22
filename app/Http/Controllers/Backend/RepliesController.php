@@ -2,119 +2,78 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\RepliesModel;
+use App\Models\PostsModel;
 
 class RepliesController extends Controller
 {
-    public function viewPosts()
+    public function viewReplies()
     {
-        $posts = PostsModel::with('topics','category','user')->get();
-        return view('backend.posts.view_posts', compact('posts'));
+        $replies = RepliesModel::with('answer')->get();
+        return view('backend.replies.view_replies', compact('replies'));
     }
-    public function detailPost($id)
+    public function detailReply($id, $post_id)
     {
-
-        $post = PostsModel::with('topics','category','user')->find($id);
-
-        return view('backend.posts.detail_post', compact('post'));
+        $post = PostsModel::with('categories','topic','user')->find($post_id);
+        $reply = RepliesModel::with('answer')->find($id);
+        return view('backend.replies.detail_reply', compact('reply','post'));
     }
-    public function addPost()
-    {
-        $topics = TopicsModel::all();
-        $categories = GameCategories::all();
 
-        return view('backend.posts.add_post', compact('topics', 'categories'));
-    }
-    public function storePost(Request $request)
+    public function storeReply(Request $request, $answer_id)
     {
         $request->validate([
-            'cat_id' => 'required',
-            'post_title' => 'required',
-            'post_content' => 'required',
-            'topics' => 'required|array|max:3',
+            'answer_id' => 'required',
+            'reply_content' => 'required',
         ]);
 
-        $photo = '';
-        if ($request->file('post_photo')) {
-            $file = $request->file('post_photo');
-            @unlink(public_path('upload/admin_images/posts/' . $request->post_photo));
-            $filename = date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images/posts/'),$filename);
-            $photo=$filename;
-         }
-
-        $post = PostsModel::create([
-            'cat_id' => $request->cat_id,
-            'post_title' => $request->post_title,
-            'post_content' => $request->post_content,
-            'post_photo' => $photo,
-            'post_by' => Auth::user()->id,
+        $reply = RepliesModel::create([
+            'answer_id' => $answer_id,
+            'reply_content' => $request->reply_content,
+            'reply_by' => Auth::user()->id,
 
         ]);
-
-        $post->topics()->sync($request->topics);
 
         $notification = array(
-            'message' => 'Post Create Successfully!',
+            'message' => 'Reply has been sent',
             'alert-type' => 'success'
         );
 
         if (Auth::user()->role === 'admin') {
-            return redirect()->route('view.posts')->with($notification);
+            return redirect()->route('view.replies')->with($notification);
         }else{
-            return redirect()->route('dashboard')->with($notification);
+            return redirect()->route('detail.answer', $answer_id)->with($notification);
         }
     }
 
-    public function updatePost(Request $request)
+    public function updateReply(Request $request, $id, $answer_id)
     {
-        $pid = $request->id;
-        $post = PostsModel::findOrFail($pid);
-        if ($post->post_by === Auth::user()->id) {
+        $reply = RepliesModel::findOrFail($id);
+        if ($reply->reply_by === Auth::user()->id) {
         $request->validate([
-            'cat_id' => 'required',
-            'post_title' => 'required',
-            'post_content' => 'required',
-            'topics' => 'required|array|max:3',
+            'answer_id' => 'required',
+            'reply_content' => 'required',
         ]);
 
 
-        $photo = '';
-        if ($request->file('post_photo')) {
-            if ($request->post_photo !== $post->post_photo) {
-                $file = $request->file('post_photo');
-                @unlink(public_path('upload/posts/' . $request->post_photo));
-                $filename = date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('upload/posts/'),$filename);
-                $photo=$filename;
-             }
-        }else {
-            $photo = $post->post_photo;
-         }
+        $reply->answer_id = $answer_id;
+        $reply->reply_content = $request->reply_content;
+        $reply->reply_by = Auth::user()->id;
 
 
-        $post->cat_id = $request->cat_id;
-        $post->post_title = $request->post_title;
-        $post->post_content = $request->post_content;
-        $post->post_photo = $photo;
-        $post->post_by = Auth::user()->id;
-
-
-        $post->save();
-
-
-        $post->topics()->sync($request->topics);
+        $reply->save();
 
         $notification = array(
-            'message' => 'Post Edit Successfully!',
+            'message' => 'Reply Edit Successfully!',
             'alert-type' => 'success'
         );
 
         if (Auth::user()->role === 'admin') {
-            return redirect()->route('view.posts')->with($notification);
+            return redirect()->route('view.replies')->with($notification);
         }else{
-            return redirect()->route('dashboard')->with($notification);
+            return redirect()->route('detail.answer', $answer_id)->with($notification);
         }
     }else{
         $notification = array(
@@ -127,35 +86,12 @@ class RepliesController extends Controller
     }
     }
 
-    public function editPost($id)
+    public function deleteReply($id)
     {
-
-        $post = PostsModel::findOrFail($id);
-        $categories = GameCategories::all();
-        $topics = TopicsModel::all();
-        if ($post->post_by === Auth::user()->id) {
-            return view('backend.posts.edit_post', compact('post', 'categories', 'topics'));
-        }else{
-            $notification = array(
-                'message' => 'You do not have permission!',
-                'alert-type' => 'Error'
-            );
-            return redirect()->route('dashboard')->with($notification);
-        }
-    }
-    public function deletePost($id)
-    {
-        $post = PostsModel::findOrFail($id);
-        $photo = $post->post_photo;
-        if ($photo !== null && $photo !== '') {
-            if (file_exists(public_path('upload/posts/' . $photo))) {
-                unlink(public_path('upload/posts/' . $photo));
-            }
-        }
-
-        $post->delete();
+        $reply = RepliesModel::findOrFail($id);
+        $reply->delete();
         $notification = array(
-            'message' => 'Post Delete Successfully!',
+            'message' => 'Reply Delete Successfully!',
             'alert-type' => 'success'
         );
 

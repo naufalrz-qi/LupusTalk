@@ -2,81 +2,69 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\AnswersModel;
+use App\Models\PostsModel;
 
 class AnswersController extends Controller
 {
     public function viewAnswers()
     {
-        $answers = AnswersModel::with('topics','category','user')->get();
+        $answers = AnswersModel::with('post')->get();
         return view('backend.answers.view_answers', compact('answers'));
     }
-    public function detailAnswer($id)
+    public function detailAnswer($id, $post_id)
     {
-
-        $answer = AnswersModel::with('topics','category','user')->find($id);
-
-        return view('backend.answers.detail_answer', compact('answer'));
+        $post = PostsModel::with('categories','topic','user')->find($post_id);
+        $answer = AnswersModel::with('post')->find($id);
+        return view('backend.answers.detail_answer', compact('answer','post'));
     }
-    public function addAnswer()
-    {
-        $topics = TopicsModel::all();
-        $categories = GameCategories::all();
 
-        return view('backend.answers.add_answer', compact('topics', 'categories'));
-    }
-    public function storeAnswer(Request $request)
+    public function storeAnswer(Request $request, $post_id)
     {
         $request->validate([
-            'cat_id' => 'required',
-            'answer_title' => 'required',
+            'post_id' => 'required',
             'answer_content' => 'required',
-            'topics' => 'required|array|max:3',
         ]);
 
         $photo = '';
         if ($request->file('answer_photo')) {
             $file = $request->file('answer_photo');
-            @unlink(public_path('upload/admin_images/answers/' . $request->answer_photo));
+            @unlink(public_path('upload/answers/' . $request->answer_photo));
             $filename = date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images/answers/'),$filename);
+            $file->move(public_path('upload/answers/'),$filename);
             $photo=$filename;
          }
 
         $answer = AnswersModel::create([
-            'cat_id' => $request->cat_id,
-            'answer_title' => $request->answer_title,
+            'post_id' => $request->post_id,
             'answer_content' => $request->answer_content,
             'answer_photo' => $photo,
             'answer_by' => Auth::user()->id,
 
         ]);
 
-        $answer->topics()->sync($request->topics);
-
         $notification = array(
-            'message' => 'Answer Create Successfully!',
+            'message' => 'Answer has been sent',
             'alert-type' => 'success'
         );
 
         if (Auth::user()->role === 'admin') {
             return redirect()->route('view.answers')->with($notification);
         }else{
-            return redirect()->route('dashboard')->with($notification);
+            return redirect()->route('detail.post', $post_id)->with($notification);
         }
     }
 
-    public function updateAnswer(Request $request)
+    public function updateAnswer(Request $request, $id, $post_id)
     {
-        $pid = $request->id;
-        $answer = AnswersModel::findOrFail($pid);
+        $answer = AnswersModel::findOrFail($id);
         if ($answer->answer_by === Auth::user()->id) {
         $request->validate([
-            'cat_id' => 'required',
-            'answer_title' => 'required',
+            'post_id' => 'required',
             'answer_content' => 'required',
-            'topics' => 'required|array|max:3',
         ]);
 
 
@@ -94,17 +82,13 @@ class AnswersController extends Controller
          }
 
 
-        $answer->cat_id = $request->cat_id;
-        $answer->answer_title = $request->answer_title;
+        $answer->post_id = $post_id;
         $answer->answer_content = $request->answer_content;
         $answer->answer_photo = $photo;
         $answer->answer_by = Auth::user()->id;
 
 
         $answer->save();
-
-
-        $answer->topics()->sync($request->topics);
 
         $notification = array(
             'message' => 'Answer Edit Successfully!',
@@ -114,7 +98,7 @@ class AnswersController extends Controller
         if (Auth::user()->role === 'admin') {
             return redirect()->route('view.answers')->with($notification);
         }else{
-            return redirect()->route('dashboard')->with($notification);
+            return redirect()->route('detail.post', $post_id)->with($notification);
         }
     }else{
         $notification = array(
@@ -127,22 +111,6 @@ class AnswersController extends Controller
     }
     }
 
-    public function editAnswer($id)
-    {
-
-        $answer = AnswersModel::findOrFail($id);
-        $categories = GameCategories::all();
-        $topics = TopicsModel::all();
-        if ($answer->answer_by === Auth::user()->id) {
-            return view('backend.answers.edit_answer', compact('answer', 'categories', 'topics'));
-        }else{
-            $notification = array(
-                'message' => 'You do not have permission!',
-                'alert-type' => 'Error'
-            );
-            return redirect()->route('dashboard')->with($notification);
-        }
-    }
     public function deleteAnswer($id)
     {
         $answer = AnswersModel::findOrFail($id);

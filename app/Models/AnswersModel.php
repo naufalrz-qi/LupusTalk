@@ -16,4 +16,9 @@ class AnswersModel extends Model
         return $this->belongsTo(PostsModel::class, 'post_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'answer_by');
+    }
+
 }

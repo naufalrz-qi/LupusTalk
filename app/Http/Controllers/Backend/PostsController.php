@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PostsModel;
+use App\Models\AnswersModel;
+use App\Models\RepliesModel;
 use App\Models\TopicsModel;
 use App\Models\GameCategories;
 
@@ -22,8 +24,9 @@ class PostsController extends Controller
     {
 
         $post = PostsModel::with('categories','topic','user')->find($id);
+        $answers = AnswersModel::with('user')->where('post_id', $id)->get();
 
-        return view('backend.posts.detail_post', compact('post'));
+        return view('backend.posts.detail_post', compact('post','answers'));
     }
     public function addPost()
     {

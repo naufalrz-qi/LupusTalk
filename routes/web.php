@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\GameCategoriesController;
 use App\Http\Controllers\Backend\TopicsController;
 use App\Http\Controllers\Backend\PostsController;
+use App\Http\Controllers\Backend\AnswersController;
+use App\Http\Controllers\Backend\RepliesController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -92,6 +94,38 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/edit/post/{id}', 'editPost')->name('edit.post');
         Route::get('/delete/post/{id}', 'deletePost')->name('delete.post');
         Route::get('/detail/post/{id}', 'detailPost')->name('detail.post');
+
+    });
+});
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Game Answers
+    Route::controller(AnswersController::class)->group(function () {
+        Route::get('/view/answers', 'viewAnswers')->name('view.answers');
+    });
+});
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Game Answers
+    Route::controller(AnswersController::class)->group(function () {
+        Route::post('/store/answer/{post_id}', 'storeAnswer')->name('store.answer');
+        Route::post('/update/answer', 'updateAnswer')->name('update.answer');
+        Route::get('/delete/answer/{id}', 'deleteAnswer')->name('delete.answer');
+        Route::get('/detail/post/{id_post}/answer/{id}', 'detailAnswer')->name('detail.answer');
+
+    });
+});
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Game Replies
+    Route::controller(RepliesController::class)->group(function () {
+        Route::get('/view/replies', 'viewReplies')->name('view.replies');
+    });
+});
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Game Replies
+    Route::controller(RepliesController::class)->group(function () {
+        Route::post('/store/reply/{post_id}', 'storeReply')->name('store.reply');
+        Route::post('/update/reply', 'updateReply')->name('update.reply');
+        Route::get('/delete/reply/{id}', 'deleteReply')->name('delete.reply');
+        Route::get('/detail/post/{id_post}/reply/{id}', 'detailReply')->name('detail.reply');
 
     });
 });
